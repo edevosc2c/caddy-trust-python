@@ -1,0 +1,4 @@
+resources/ssl/*
+resources/caddy/data/*
+# ignore possible caddy binary downloaded
+/caddy

@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  caddy:
+    image: caddy:2.8-alpine
+    networks:
+      default:
+        aliases:
+          - georchestra-127-0-0-1.nip.io
+    ports:
+      - "80:80"
+      - "443:443"
+      - "127.0.0.1:2019:2019"
+    environment:
+      - CADDY_ADMIN=0.0.0.0:2019
+    volumes:
+      - ./resources/ssl:/etc/certs:ro
+      - ./resources/caddy/etc:/etc/caddy:ro
+      - ./resources/caddy/data:/data/caddy
+
+  python:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+    environment:
+      REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt

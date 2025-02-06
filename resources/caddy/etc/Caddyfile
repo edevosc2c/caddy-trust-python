@@ -1,0 +1,4 @@
+georchestra-127-0-0-1.nip.io {
+    tls internal
+    respond "Hello, world!"
+}
